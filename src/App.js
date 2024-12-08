@@ -5,8 +5,8 @@ import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Home from "./components/Home";
 import CreateBlog from "./components/CreateBlog";
-import './index.css'
-
+import BlogDetails from "./components/BlogDetails"; // Import BlogDetails component
+import './index.css';
 
 const App = () => {
   return (
@@ -26,13 +26,14 @@ const Content = () => {
     <>
       {/* Conditionally render Navbar */}
       {!hideNavbar && <Navbar />}
-      
+
       {/* Define routes */}
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<SignUp />} />
         <Route path="/" element={<Home />} />
         <Route path="/create-blog" element={<CreateBlog />} />
+        <Route path="/blog/:blogId" element={<BlogDetails />}  /> {/* Add route for BlogDetails */}
       </Routes>
     </>
   );

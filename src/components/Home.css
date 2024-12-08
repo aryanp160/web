@@ -148,6 +148,15 @@ button:focus {
     align-items: center;
     margin-top: 15px; /* Space above the buttons */
 }
+.blog-actions button {
+    font-size: 16px;
+  }
+  
+  .blog-actions button svg {
+    font-size: 20px; /* Icon size */
+    margin-right: 8px; /* Space between icon and text */
+  }
+  
 
 /* Like and Share button styling */
 .like-btn, .share-btn {
@@ -178,3 +187,13 @@ button:focus {
     font-size: 14px;
     color: #333; /* Neutral text color */
 }
+
+
+.blog-title-link {
+    text-decoration: none; /* Removes underline */
+    color: inherit; /* Ensures the link color matches the surrounding text */
+    cursor: pointer;
+  }
+  
+
+  

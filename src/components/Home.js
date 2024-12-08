@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { db, auth } from '../firebase';
 import { collection, getDocs, deleteDoc, doc, updateDoc } from 'firebase/firestore';
+import { AiOutlineLike, AiFillLike, AiFillDelete } from 'react-icons/ai'; // Import like and delete icons
+import { FiShare2 } from 'react-icons/fi'; // Import share icon
 import './Home.css';
+import { Link } from 'react-router-dom';
 
 const Home = () => {
   const [blogs, setBlogs] = useState([]);
@@ -13,6 +16,9 @@ const Home = () => {
       const blogSnapshot = await getDocs(blogsCollection);
       const blogList = blogSnapshot.docs.map(doc => ({
         id: doc.id,
+        likes: 0,
+        shares: 0,
+        likedBy: [], // Default likedBy if not in Firestore
         ...doc.data(),
       }));
       setBlogs(blogList);
@@ -40,15 +46,31 @@ const Home = () => {
   };
 
   const handleLike = async (id) => {
+    if (!auth.currentUser) return;
+
+    const userId = auth.currentUser.uid;
     const updatedBlogs = blogs.map(blog => {
       if (blog.id === id) {
-        const updatedBlog = { ...blog, likes: (blog.likes || 0) + 1 };
+        const isLiked = blog.likedBy.includes(userId);
+        const updatedBlog = {
+          ...blog,
+          likes: isLiked ? blog.likes - 1 : blog.likes + 1,
+          likedBy: isLiked
+            ? blog.likedBy.filter(uid => uid !== userId) // Remove user from likedBy
+            : [...blog.likedBy, userId], // Add user to likedBy
+        };
+
         const blogDocRef = doc(db, 'blogs', id);
-        updateDoc(blogDocRef, { likes: updatedBlog.likes });
+        updateDoc(blogDocRef, {
+          likes: updatedBlog.likes,
+          likedBy: updatedBlog.likedBy,
+        });
+
         return updatedBlog;
       }
       return blog;
     });
+
     setBlogs(updatedBlogs);
   };
 
@@ -85,7 +107,10 @@ const Home = () => {
       {blogs.length > 0 ? (
         blogs.map((blog) => (
           <div key={blog.id} className="blog-post">
-            <h3>{blog.title}</h3>
+            <Link to={`/blog/${blog.id}`} className="blog-title-link" >
+                <h3 >{blog.title}</h3>
+              </Link>
+
             <h4 className="author-subtitle">by {blog.author}</h4>
             <p>
               {expandedBlog === blog.id ? formatContent(blog.content) : getShortContent(blog.content)}
@@ -97,17 +122,42 @@ const Home = () => {
             )}
             {auth.currentUser && auth.currentUser.uid === blog.uid && (
               <button className="delete-btn" onClick={() => handleDelete(blog.id, blog.uid)}>
-                Delete Blog
+                <AiFillDelete /> Delete
               </button>
             )}
             <div className="blog-actions">
-              <button className="like-btn" onClick={() => handleLike(blog.id)}>
-                Like <span className="like-count">({blog.likes || 0})</span>
-              </button>
-              <button className="share-btn" onClick={() => handleShare(blog.id)}>
-                Share <span className="share-count">({blog.shares || 0})</span>
-              </button>
-            </div>
+                <button
+                  className="like-btn"
+                  onClick={() => handleLike(blog.id)}
+                  style={{ display: 'flex', alignItems: 'center', fontSize: '16px' }} // Adjusted styles for alignment and spacing
+                >
+                  {blog.likedBy.includes(auth.currentUser?.uid) ? (
+                    <AiFillLike style={{ fontSize: '20px', marginRight: '8px' }} /> // Icon size and spacing
+                  ) : (
+                    <AiOutlineLike style={{ fontSize: '20px', marginRight: '8px' }} />
+                  )}
+                  Like <span className="like-count">({blog.likes || 0})</span>
+                </button>
+                <button
+                  className="share-btn"
+                  onClick={() => handleShare(blog.id)}
+                  style={{ display: 'flex', alignItems: 'center', fontSize: '16px' }}
+                >
+                  <FiShare2 style={{ fontSize: '20px', marginRight: '8px' }} />
+                  Share <span className="share-count">({blog.shares || 0})</span>
+                </button>
+                {auth.currentUser && auth.currentUser.uid === blog.uid && (
+                  <button
+                    className="delete-btn"
+                    onClick={() => handleDelete(blog.id, blog.uid)}
+                    style={{ display: 'flex', alignItems: 'center', fontSize: '16px' }}
+                  >
+                    <AiFillDelete style={{ fontSize: '20px', marginRight: '8px' }} />
+                    Delete
+                  </button>
+                )}
+              </div>
+
             <hr />
           </div>
         ))
