@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { db, auth } from '../firebase';
-import { collection, getDocs, deleteDoc, doc } from 'firebase/firestore';
+import { collection, getDocs, deleteDoc, doc, updateDoc } from 'firebase/firestore';
 import './Home.css';
 
 const Home = () => {
@@ -13,8 +13,6 @@ const Home = () => {
       const blogSnapshot = await getDocs(blogsCollection);
       const blogList = blogSnapshot.docs.map(doc => ({
         id: doc.id,
-        likes: 0, // Default likes if not in Firestore
-        shares: 0, // Default shares if not in Firestore
         ...doc.data(),
       }));
       setBlogs(blogList);
@@ -41,20 +39,30 @@ const Home = () => {
     setExpandedBlog(expandedBlog === id ? null : id);
   };
 
-  const handleLike = (id) => {
-    setBlogs(prevBlogs =>
-      prevBlogs.map(blog =>
-        blog.id === id ? { ...blog, likes: blog.likes + 1 } : blog
-      )
-    );
+  const handleLike = async (id) => {
+    const updatedBlogs = blogs.map(blog => {
+      if (blog.id === id) {
+        const updatedBlog = { ...blog, likes: (blog.likes || 0) + 1 };
+        const blogDocRef = doc(db, 'blogs', id);
+        updateDoc(blogDocRef, { likes: updatedBlog.likes });
+        return updatedBlog;
+      }
+      return blog;
+    });
+    setBlogs(updatedBlogs);
   };
 
-  const handleShare = (id) => {
-    setBlogs(prevBlogs =>
-      prevBlogs.map(blog =>
-        blog.id === id ? { ...blog, shares: blog.shares + 1 } : blog
-      )
-    );
+  const handleShare = async (id) => {
+    const updatedBlogs = blogs.map(blog => {
+      if (blog.id === id) {
+        const updatedBlog = { ...blog, shares: (blog.shares || 0) + 1 };
+        const blogDocRef = doc(db, 'blogs', id);
+        updateDoc(blogDocRef, { shares: updatedBlog.shares });
+        return updatedBlog;
+      }
+      return blog;
+    });
+    setBlogs(updatedBlogs);
     alert('Blog shared successfully!');
   };
 
@@ -94,10 +102,10 @@ const Home = () => {
             )}
             <div className="blog-actions">
               <button className="like-btn" onClick={() => handleLike(blog.id)}>
-                Like <span className="like-count">({blog.likes})</span>
+                Like <span className="like-count">({blog.likes || 0})</span>
               </button>
               <button className="share-btn" onClick={() => handleShare(blog.id)}>
-                Share <span className="share-count">({blog.shares})</span>
+                Share <span className="share-count">({blog.shares || 0})</span>
               </button>
             </div>
             <hr />
