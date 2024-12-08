@@ -1,0 +1,180 @@
+/* General body styling */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    display: flex;
+    background-color: #f9f9f9;
+    height: 100vh;
+}
+
+/* Main content styling */
+.main-content {
+    margin-left: 60px; /* Initial space for slim sidebar */
+    padding: 20px;
+    width: calc(100% - 60px); /* Adjust width for slim sidebar */
+    transition: margin-left 0.3s ease, width 0.3s ease; /* Smooth transition for margin-left and width */
+    flex-grow: 1; /* Ensure it takes the remaining space */
+    margin-right: 20px; /* Space on the right side */
+}
+
+/* When the sidebar expands, adjust the content margin */
+.side-navbar.expanded + .main-content {
+    margin-left: 200px; /* Expanded sidebar width */
+    width: calc(100% - 200px); /* Adjust the width when the sidebar expands */
+}
+
+/* Blog post container styling */
+.container {
+    padding: 20px;
+    margin-right: 20px; /* Maintain space on right side */
+}
+
+/* Blog post container styling */
+.blog-post {
+    padding: 20px;
+    margin: 20px auto;
+    border-bottom: 1px solid #ccc;
+    background-color: #f4f4f4; /* Light background color */
+    border-radius: 8px;
+    width: 900px; /* Set the width of the blog post */
+    max-width: 1000px; /* Optional: Ensures the blog post doesn't become too wide */
+    box-sizing: border-box;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    word-break: break-word;
+    position: relative; /* Required for absolute positioning */
+}
+
+/* To ensure the blog text doesn't overflow */
+.blog-post p {
+    margin: 0;
+    padding-bottom: 15px; /* Optional: Space at the bottom of paragraphs */
+    white-space: normal; /* Ensure newlines are respected in expanded state */
+}
+
+/* Blog title styling (bold, no background) */
+h3 {
+    font-size: 2em;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333; /* Ensure the title color is dark */
+}
+
+/* Author's name (subheading) */
+.author-subtitle {
+    font-style: italic;
+    color: #888; /* Grey color for subheading */
+    margin-bottom: 15px;
+}
+
+/* Button styling */
+button {
+    margin-top: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 5px;
+    padding: 5px 10px;
+}
+
+button:hover {
+    background-color: #ff6f61;
+    color: white;
+}
+
+button:focus {
+    outline: none;
+}
+
+/* Styling for the "See More" text */
+.see-more {
+    color: #ff6f61;
+    cursor: pointer;
+    text-decoration: underline;
+    display: block;
+    margin-top: 10px;
+}
+
+/* Delete button styling */
+.delete-btn {
+    color: red;
+    cursor: pointer;
+    font-size: 14px;
+    position: absolute;
+    top: 20px; /* Adjust vertical alignment */
+    right: 20px; /* Space from the right edge */
+    background-color: white; /* Optional: Adds a background to the button */
+    padding: 5px 10px; /* Button padding */
+    border-radius: 5px; /* Optional: Rounded corners */
+    border: 1px solid red; /* Optional: Border for emphasis */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.delete-btn:hover {
+    background-color: red;
+    color: white;
+}
+
+/* Ensure paragraphs break correctly and preserve line breaks */
+.blog-post p {
+    font-size: 1em;
+    line-height: 1.5;
+    color: #333;
+    margin-bottom: 15px;
+    white-space: normal; /* Prevent newlines in collapsed state */
+    word-wrap: break-word; /* Ensures words are wrapped properly */
+    overflow-wrap: break-word; /* Prevents overflow of long words */
+}
+
+/* Adjustments for mobile view */
+@media (max-width: 768px) {
+    .container {
+        padding: 15px;
+    }
+
+    h3 {
+        font-size: 1.8em;
+    }
+
+    .author-subtitle {
+        font-size: 1.2em;
+    }
+}
+
+/* Styling for the buttons container */
+.blog-actions {
+    display: flex;
+    justify-content: flex-start; /* Align to the left */
+    align-items: center;
+    margin-top: 15px; /* Space above the buttons */
+}
+
+/* Like and Share button styling */
+.like-btn, .share-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 15px;
+    font-size: 14px;
+    font-weight: bold;
+    color: white;
+    background-color: #ff6f61; /* Primary color for buttons */
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-right: 10px; /* Space between buttons */
+}
+
+/* Button hover effect */
+.like-btn:hover, .share-btn:hover {
+    background-color: #d45643; /* Darker shade on hover */
+    transform: scale(1.05); /* Slight zoom effect */
+}
+
+/* Count styling */
+.like-count, .share-count {
+    margin-left: 5px;
+    font-size: 14px;
+    color: #333; /* Neutral text color */
+}

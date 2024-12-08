@@ -1,0 +1,149 @@
+/* Sidebar styling */
+.side-navbar {
+    height: 100vh;
+    width: 60px; /* Initial slim width */
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #ff6f61;
+    color: white;
+    padding: 10px 5px;
+    box-shadow: 2px 0px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: width 0.3s ease; /* Smooth transition on hover */
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center content */
+}
+
+/* Expanded Sidebar when Hovered or Active */
+.side-navbar.expanded {
+    width: 275px; /* Expanded width */
+}
+
+/* App icon (open book) styling */
+.app-icon {
+    font-size: 30px;
+    transition: opacity 0.3s ease;
+    color: beige;
+    position: absolute;
+    top: 5%; /* Position vertically at the center */
+    left: 50%; /* Position horizontally at the center */
+    transform: translate(-50%, -50%); /* Shift to center exactly */
+}
+
+/* Close book icon when collapsed */
+.close-book-icon {
+    font-size: 30px;
+    transition: opacity 0.3s ease;
+    color: beige;
+    position: relative;
+    top: 30px; /* Move the close book icon farther down */
+}
+
+/* Show the open book icon when sidebar is expanded */
+.side-navbar.expanded .app-icon {
+    display: block;
+}
+
+/* Show the close book icon when sidebar is collapsed */
+.side-navbar:not(.expanded) .close-book-icon {
+    display: block;
+}
+
+/* Navbar container styling */
+.navbar-container {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1; /* Ensure navbar grows to fill the height */
+    justify-content: space-between;
+}
+
+/* Navbar item styling */
+.navbar-list {
+    list-style-type: none;
+    padding: 0;
+}
+
+.navbar-link {
+    display: flex;
+    align-items: center;
+    color: white;
+    text-decoration: none;
+    padding: 15px 10px;
+    font-size: 25px; /* Increased font size */
+    margin-bottom: 10px;
+    border-radius: 8px;
+    transition: background-color 0.3s ease, padding-left 0.3s ease;
+}
+
+/* Hover effect for navbar items */
+.navbar-link:hover {
+    background-color: #d45643; /* Highlight on hover */
+}
+
+/* Navbar icon styling */
+.navbar-link i {
+    font-size: 25px; /* Set the icon size equal to the text size */
+    margin-right: 0; /* No gap for icons when collapsed */
+    transition: margin-right 0.3s ease;
+}
+
+/* Add space between icon and text when expanded */
+.side-navbar:hover .navbar-link i {
+    margin-right: 10px; /* Add space when expanded */
+}
+
+/* Navbar text label styling */
+.nav-label {
+    display: none; /* Hide labels when sidebar is collapsed */
+    transition: opacity 0.3s ease;
+}
+
+/* Show labels when sidebar is expanded */
+.side-navbar:hover .nav-label {
+    display: inline; /* Show labels on hover */
+    opacity: 1;
+}
+
+/* Logout button styling */
+.logout-btn {
+    background: none;
+    border: none;
+    color: white;
+    display: flex;
+    align-items: center;
+    padding: 15px 10px;
+    font-size: 22px; /* Increased font size */
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+/* Hover effect for logout button */
+.logout-btn:hover {
+    background-color: #d45643;
+}
+
+/* Responsive Design for smaller screens */
+@media (max-width: 768px) {
+    .side-navbar {
+        width: 50px; /* Smaller sidebar on tablets */
+    }
+
+    .side-navbar:hover {
+        width: 200px; /* Expanded sidebar on hover */
+    }
+}
+
+@media (max-width: 480px) {
+    .side-navbar {
+        width: 40px; /* Very small sidebar for mobile */
+    }
+
+    .side-navbar:hover {
+        width: 180px; /* Expanded sidebar on hover */
+    }
+}

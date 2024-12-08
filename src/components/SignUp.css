@@ -1,0 +1,119 @@
+/* General styling for body */
+body {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full height of the viewport */
+    background-color: #ffe6e1; /* Coral light background */
+    box-sizing: border-box;
+  }
+  
+  /* Container for the form */
+  .login-container {
+    width: 700px;
+    padding: 30px; /* Added more padding */
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Slightly bigger shadow for a more refined look */
+    text-align: center;
+    box-sizing: border-box;
+  }
+  
+  /* Header styling */
+  h2 {
+    color: #ff6f61; /* Coral color */
+    font-size: 40px;
+    margin-bottom: 20px;
+    font-weight: 600; /* Slightly bolder text */
+  }
+  
+  /* Error message styling */
+  .error-text {
+    color: red;
+    margin-bottom: 20px;
+    font-size: 14px; /* Smaller font size for error messages */
+  }
+  
+  /* Form group spacing */
+  .form-group {
+    margin-bottom: 20px; /* Increased space between form inputs */
+    text-align: left;
+  }
+  
+  /* Label styling */
+  .form-group label {
+    font-size: 35px; /* Slightly larger label font size */
+    color: #555;
+    margin-bottom: 8px;
+  }
+  
+  /* Input styling */
+  .form-group input {
+    width: 100%;
+    padding: 12px; /* Increased padding for inputs */
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 30px;
+    box-sizing: border-box; /* Ensure padding doesn't affect width */
+    transition: border-color 0.3s ease; /* Smooth transition on focus */
+  }
+  
+  /* Focused input styling */
+  .form-group input:focus {
+    outline: none;
+    border-color: #ff6f61; /* Highlight on focus */
+  }
+  
+  /* Primary button styling */
+  .btn-primary {
+    background-color: #ff6f61;
+    color: white;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin-top: 20px; /* Added space between buttons */
+  }
+  
+  .btn-primary:hover {
+    background-color: #e8594f;
+  }
+  
+  /* Google login button styling */
+  .btn-google {
+    background-color: #4285f4;
+    color: white;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin-top: 15px; /* Added space between buttons */
+  }
+  
+  .btn-google:hover {
+    background-color: #357ae8;
+  }
+  
+  /* Responsive design adjustments */
+  @media (max-width: 768px) {
+    .login-container {
+      max-width: 90%;
+      padding: 25px; /* Reduce padding for smaller screens */
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .login-container {
+      max-width: 100%;
+      padding: 20px; /* Further reduce padding for very small screens */
+    }
+  }
+  
